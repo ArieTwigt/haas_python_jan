@@ -25,8 +25,10 @@ def get_cars_by_brand(brand: str, type_output="list", export_csv=False):
         export_cars(cars_df, f"export_{brand}")
     else: 
         if type_output == 'list':
+            print(car_list[:10])
             return car_list
         elif type_output == 'df':
+            print(cars_df.head(10))
             return cars_df
         elif type_output == "both":
             return car_list, cars_df
