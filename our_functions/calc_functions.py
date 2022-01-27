@@ -1,6 +1,6 @@
 import math
 
-def calc_circle(diameter: float):
+def calc_circle(diameter: float) -> float:
     '''
     This is a function that calculates the circle
 
@@ -16,3 +16,8 @@ def calc_circle(diameter: float):
     radius = diameter / 2
     surface = math.pow(radius, 2) * math.pi
     return surface
+
+
+def calc_contents(length, width, height):
+    contents = length * width * height
+    return contents
