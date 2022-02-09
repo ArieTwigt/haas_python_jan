@@ -22,25 +22,18 @@ class Person:
         self.age = 0
         print("Born again!")
 
-    pass
+    
+    def __repr__(self):
+        intro = f"This is a {self.type}\nThe name is {self.name}\nLives in {self.city}" 
+        return intro
 
-
-
-
-
-#%% Define person based on dict
-person_1 = {"name": "Arie", "city": "Amsterdam"}
-
-#%%
-print(person_1['name'])
-print(person_1['city'])
 
 # %% Define person based on class
-person_2 = Person("Jan", "Rotterdam", 20)
+person_1 = Person("Jan", "Rotterdam", 20)
 
 
 #%%
-person_2.age
+person_1
 
 
 #%%
@@ -76,7 +69,7 @@ import random
 import math
 
 # %%
-class DiceBlock:
+class DiceBlock(Game):
 
     # default atrributes
     throws = []
@@ -96,14 +89,15 @@ class DiceBlock:
         self.throws.append(result)
 
 
-    def calc_score(self):
+    def calc_score(self, print_score=False):
         score = sum(self.throws)
         self.score = score
-        print(f"Your score is {score}")
+        if print_score:
+            print(f"Your score is {score}")
 
 
     def create_score_card(self):
-        score_card = f"Score of player {self.player_name}\n"
+        score_card = f"\n\nScore of player {self.player_name}\n"
         score_card += "-" * 5       
 
         for idx, value in enumerate(self.throws):
@@ -111,7 +105,10 @@ class DiceBlock:
             score_card += score_line
 
         score_card += "\n"
-        score_card += "-" * 5      
+        score_card += "-" * 5    
+
+        # calc score 
+        self.calc_score()  
         score_card += f"\nTotal score: {self.score}\n\n"      
 
         print(score_card)
@@ -143,5 +140,60 @@ for dice in dices_list:
     dice.create_score_card()
 
 
+
+# %%
+class Game:
+    game_type = "dice"
+    players = []
+
+    def __init__(self, game_name):
+        self.game_name = game_name
+        self.players = []
+
+    def add_player(self, player):
+        self.players.append(player)
+
+
+    def play_game(self):
+        for dice in self.players:
+            print(f"\nPlayer: {dice.player_name}\n")
+            total_throws = 5
+        
+            while total_throws > 0:
+                dice.throw_dice()
+                total_throws -= 1
+
+
+    def calc_scores(self):
+        for dice in self.players:
+            dice.calc_score()
+            dice.create_score_card()
+
+
+
+
+
+
+#%%
+my_game = Game("Game 1")
+
+
+#%%
+dice_1 = DiceBlock("Player A")
+dice_2 = DiceBlock("Player B")
+dice_3 = DiceBlock("Player B")
+
+#%%
+my_game.add_player(dice_1)
+my_game.add_player(dice_2)
+my_game.add_player(dice_3)
+# %%
+
+# %%
+my_game.play_game()
+# %%
+my_game.calc_scores()
+# %%
+dice_1.game_type
 
 # %%
